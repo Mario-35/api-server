@@ -2,6 +2,8 @@
 
 Web application project built with TypeScript, React, and Relay.
 
+ONLY FOR TEST WEB APP WILL BE VUEJS3
+
 ## Tech Stack
 
 - [TypeScript](https://www.typescriptlang.org/), [Babel](https://babeljs.io/), [Next.js](https://nextjs.org/)
@@ -18,5 +20,4 @@ The app must become available on [`http://localhost:3000/`](http://localhost:300
 
 ## License
 
-Copyright © 2016-present Kriasoft. This source code is licensed under the MIT license found in the
-[LICENSE](https://github.com/kriasoft/nodejs-api-starter/blob/main/LICENSE) file.
+Copyright © 2020 Inrae.

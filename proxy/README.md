@@ -1,4 +1,4 @@
-# Application Routing / Reverse Proxy
+# Reverse Proxy
 
 Light-weight reverse proxy implemented by using [Cloudflare Workers](https://workers.cloudflare.com/).
 
@@ -22,19 +22,19 @@ Light-weight reverse proxy implemented by using [Cloudflare Workers](https://wor
 ## How to Build
 
 ```bash
-$ yarn build                    # Compile and bundle the code with Babel, Webpack
+$ yarn build                    # Builds the project using Webpack
 ```
 
 ## How to Deploy
 
-Compile and bundle the code into `dist/proxy.js` (`build`), upload application
+Compile and bundle the code into `dist/main.js` (`build`), upload application
 bundle to Google Cloud Storage (`push`), and finally, deploy or re-deploy it
 to Cloudflare Workers (`deploy`).
 
 ```
-$ yarn run build
-$ yarn run push [--version #0]
-$ yarn run deploy [--version #0] [--env #0] [--no-download]
+$ yarn build
+$ yarn push [--version=#0]
+$ yarn deploy [--version=#0] [--env=#1] [--no-download]
 ```
 
 ## References
@@ -43,5 +43,4 @@ $ yarn run deploy [--version #0] [--env #0] [--no-download]
 
 ## License
 
-Copyright © 2016-present Kriasoft. This source code is licensed under the MIT license found in the
-[LICENSE](https://github.com/kriasoft/nodejs-api-starter/blob/main/LICENSE) file.
+Copyright © 2020 Inrae.
