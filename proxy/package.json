@@ -1,0 +1,33 @@
+{
+  "name": "proxy",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "author": "mario ADAM mario.adam@inrae.fr",
+  "scripts": {
+    "build": "webpack",
+    "push": "yarn push -r env ../dist/proxy.js",
+    "deploy": "node ../scripts/deploy-proxy",
+    "proxy:build": "yarn workspace proxy run build",
+    "proxy:push": "yarn workspace proxy run push",
+    "proxy:deploy": "yarn workspace proxy run deploy"
+  },
+  "dependencies": {
+    "@babel/core": "^7.11.6",
+    "@cloudflare/workers-types": "^2.0.0",
+    "babel-loader": "^8.1.0",
+    "core-js": "^3.6.5",
+    "cross-spawn": "^7.0.3",
+    "env": "workspace:*",
+    "got": "^11.7.0",
+    "minimist": "^1.2.5",
+    "scripts": "workspace:*",
+    "typescript": "4.0.3",
+    "webpack": "5.0.0-rc.0",
+    "webpack-cli": "webpack/webpack-cli#workspace=webpack-cli&commit=111198bb2925b7a98fd43b302a64a4dfded2585a"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.13",
+    "@types/minimist": "^1.2.0"
+  }
+}

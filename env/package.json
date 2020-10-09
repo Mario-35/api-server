@@ -1,0 +1,14 @@
+{
+  "name": "env",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "author": "mario ADAM mario.adam@inrae.fr",
+  "main": "index.cjs",
+  "type": "commonjs",
+  "dependencies": {
+    "@babel/core": "^7.11.6",
+    "dotenv": "^8.2.0",
+    "minimist": "^1.2.5"
+  }
+}

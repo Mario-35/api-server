@@ -1,0 +1,426 @@
+schema {
+  query: Root
+  mutation: Mutation
+}
+
+# The top-level API
+type Root {
+  # Fetches an object given its ID
+  node(
+    # The ID of an object
+    id: ID!
+  ): Node
+
+  # Fetches objects given their IDs
+  nodes(
+    # The IDs of objects
+    ids: [ID!]!
+  ): [Node]!
+  area(code: String, name: String, search: String, format: String): Area
+  areas(code: String, name: String, count: Boolean, search: String, format: String, after: String, first: Int): [Area]
+  dataraw(keyid: BigInt): Dataraw
+  dataraws(start: String, end: String, day: String, search: String, format: String, after: String, first: Int): [Dataraw]
+  dataupdate(keyid: BigInt): Dataupdate
+  dataupdates(keyid: BigInt, start: String, end: String, day: String): [Dataupdate]
+  sensor(code: String, name: String, unite: String, search: String): Sensor
+  sensors(code: String, name: String, station_id: Int, station_code: String, station_name: String, search: String, format: String, after: String, first: Int): [Sensor]
+  station(code: String, name: String, search: String): Station
+  stations(area_id: Int, area_code: String, area_name: String, code: String, name: String, search: String, format: String, after: String, first: Int): [Station]
+  me: User
+  user(username: String!): User
+  users(after: String, first: Int): UserConnection
+  version: String
+}
+
+# An object with an ID
+interface Node {
+  # The id of the object.
+  id: ID!
+}
+
+type Area implements Node {
+  # The ID of an object
+  id: ID!
+  code: String!
+  name: String!
+  active: Boolean
+  createdAt: Date
+  updatedAt: Date
+}
+
+# Date custom scalar type
+scalar Date
+
+type Dataraw implements Node {
+  # The ID of an object
+  id: ID!
+  sensor: Sensor
+  keyid: BigInt
+  date: Date
+  value: Float
+  validate: Float
+  updates: [Dataupdate]
+  createdAt: Date
+  updatedAt: Date
+}
+
+type Sensor implements Node {
+  # The ID of an object
+  id: ID!
+  station: Station
+  code: String!
+  name: String!
+  unite: String!
+  active: Boolean
+  createdAt: Date
+  updatedAt: Date
+}
+
+type Station implements Node {
+  # The ID of an object
+  id: ID!
+  area: Area
+  code: String!
+  name: String!
+  active: Boolean
+  createdAt: Date
+  updatedAt: Date
+}
+
+# The `BigInt` scalar type represents non-fractional signed whole numeric values. BigInt can represent values between -(2^53) + 1 and 2^53 - 1. 
+scalar BigInt
+
+type Dataupdate implements Node {
+  # The ID of an object
+  id: ID!
+  keyid: BigInt
+  date: Date
+  value: Float
+  validate: Float
+}
+
+type User implements Node {
+  # The ID of an object
+  id: ID!
+  username: String!
+  email: String
+  emailVerified: Boolean
+  name: String
+  givenName: String
+  familyName: String
+  timeZone: String
+  locale: String
+  admin: Boolean
+  blocked: Boolean
+  createdAt: Date
+  updatedAt: Date
+  lastLogin: Date
+}
+
+# A connection to a list of items.
+type UserConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [UserEdge]
+  totalCount: Int!
+}
+
+# Information about pagination in a connection.
+type PageInfo {
+  # When paginating forwards, are there more items?
+  hasNextPage: Boolean!
+
+  # When paginating backwards, are there more items?
+  hasPreviousPage: Boolean!
+
+  # When paginating backwards, the cursor to continue.
+  startCursor: String
+
+  # When paginating forwards, the cursor to continue.
+  endCursor: String
+}
+
+# An edge in a connection.
+type UserEdge {
+  # The item at the end of the edge
+  node: User
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+type Mutation {
+  # add an Area.
+  addArea(input: addAreaInput!): addAreaPayload
+
+  # update an Area.
+  updateArea(input: updateAreaInput!): updateAreaPayload
+
+  # delete an Area.
+  deleteArea(input: deleteAreaInput!): deleteAreaPayload
+
+  # Authenticates user with an ID token or email and password.
+  signIn(idToken: String, email: String, password: String): SignInPayload
+
+  # Removes the authentication cookie.
+  signOut: String
+
+  # add datas in dataraw from file
+  addDatarawFromFile(input: addDatarawFromFileInput!): addDatarawFromFilePayload
+
+  # add a dataraw.
+  addDataraw(input: addDatarawInput!): addDatarawPayload
+
+  # update a dataraw.
+  updateDataraw(input: updateDatarawInput!): updateDatarawPayload
+
+  # delete an dataraw.
+  deleteDataraw(input: deleteDatarawInput!): deleteDatarawPayload
+
+  # add a Sensor.
+  addSensor(input: addSensorInput!): addSensorPayload
+
+  # update a Sensor.
+  updateSensor(input: updateSensorInput!): updateSensorPayload
+
+  # delete a Sensor.
+  deleteSensor(input: deleteSensorInput!): deleteSensorPayload
+
+  # add a Station.
+  addStation(input: addStationInput!): addStationPayload
+
+  # update a Station.
+  updateStation(input: updateStationInput!): updateStationPayload
+
+  # delete an Area.
+  deleteStation(input: deleteStationInput!): deleteStationPayload
+
+  # Updates a user.
+  updateUser(input: UpdateUserInput!): UpdateUserPayload
+}
+
+type addAreaPayload {
+  area: Area
+  errors: [[String]!]
+  clientMutationId: String
+}
+
+input addAreaInput {
+  code: String
+  name: String
+  list: String
+  file: String
+  clientMutationId: String
+}
+
+type updateAreaPayload {
+  area: Area
+  errors: [[String]!]
+  clientMutationId: String
+}
+
+input updateAreaInput {
+  code: String
+  name: String
+  list: String
+  file: String
+  clientMutationId: String
+}
+
+type deleteAreaPayload {
+  area: Area
+  errors: [[String]!]
+  clientMutationId: String
+}
+
+input deleteAreaInput {
+  code: String
+  name: String
+  list: String
+  file: String
+  clientMutationId: String
+}
+
+type SignInPayload {
+  me: User
+}
+
+type addDatarawFromFilePayload {
+  dataraw: Dataraw
+  errors: [[String]!]
+  clientMutationId: String
+}
+
+input addDatarawFromFileInput {
+  filepath: String
+  filename: String
+  clientMutationId: String
+}
+
+type addDatarawPayload {
+  dataraw: Dataraw
+  errors: [[String]!]
+  clientMutationId: String
+}
+
+input addDatarawInput {
+  keyid: BigInt
+  sensor_id: Int
+  sensor_code: String
+  date: String
+  value: Float
+  validate: Float
+  clientMutationId: String
+}
+
+type updateDatarawPayload {
+  dataraw: Dataraw
+  errors: [[String]!]
+  clientMutationId: String
+}
+
+input updateDatarawInput {
+  keyid: BigInt
+  sensor_id: Int
+  sensor_code: String
+  date: String
+  value: Float
+  validate: Float
+  active: Boolean
+  clientMutationId: String
+}
+
+type deleteDatarawPayload {
+  dataraw: Dataraw
+  errors: [[String]!]
+  clientMutationId: String
+}
+
+input deleteDatarawInput {
+  keyid: BigInt
+  sensor_id: Int
+  sensor_code: String
+  date: String
+  clientMutationId: String
+}
+
+type addSensorPayload {
+  sensor: Sensor
+  errors: [[String]!]
+  clientMutationId: String
+}
+
+input addSensorInput {
+  station_id: Int
+  station_code: String
+  station_name: String
+  code: String
+  name: String
+  unite: String
+  list: String
+  file: String
+  clientMutationId: String
+}
+
+type updateSensorPayload {
+  sensor: Sensor
+  errors: [[String]!]
+  clientMutationId: String
+}
+
+input updateSensorInput {
+  station_id: Int
+  station_code: String
+  station_name: String
+  code: String
+  name: String
+  unite: String
+  list: String
+  file: String
+  clientMutationId: String
+}
+
+type deleteSensorPayload {
+  sensor: Sensor
+  errors: [[String]!]
+  clientMutationId: String
+}
+
+input deleteSensorInput {
+  station_id: Int
+  station_code: String
+  station_name: String
+  code: String
+  name: String
+  unite: String
+  list: String
+  file: String
+  clientMutationId: String
+}
+
+type addStationPayload {
+  station: Station
+  errors: [[String]!]
+  clientMutationId: String
+}
+
+input addStationInput {
+  area_id: Int
+  area_code: String
+  area_name: String
+  code: String
+  name: String
+  list: String
+  file: String
+  clientMutationId: String
+}
+
+type updateStationPayload {
+  station: Station
+  errors: [[String]!]
+  clientMutationId: String
+}
+
+input updateStationInput {
+  area_id: Int
+  area_code: String
+  area_name: String
+  code: String
+  name: String
+  list: String
+  file: String
+  clientMutationId: String
+}
+
+type deleteStationPayload {
+  station: Station
+  errors: [[String]!]
+  clientMutationId: String
+}
+
+input deleteStationInput {
+  code: String
+  name: String
+  clientMutationId: String
+}
+
+type UpdateUserPayload {
+  user: User
+  errors: [[String]!]
+  clientMutationId: String
+}
+
+input UpdateUserInput {
+  id: ID!
+  username: String
+  email: String
+  name: String
+  picture: String
+  timeZone: String
+  locale: String
+  admin: Boolean
+  validateOnly: Boolean
+  clientMutationId: String
+}
