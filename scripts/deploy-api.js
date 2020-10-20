@@ -3,8 +3,6 @@
  *
  *   $ yarn deploy [--version=#0] [--env=#1]
  *
- * @see https://cloud.google.com/functions
- * @see https://cloud.google.com/sdk/gcloud/reference/functions/deploy
  * @copyright 2020-present Inrae
  * @author mario.adam@inrae.fr
  */
@@ -15,7 +13,7 @@ const minimist = require("minimist");
 
 const env = process.env;
 const pkg = require("api/package.json");
-const region = env.GOOGLE_CLOUD_REGION;
+// const region = env.GOOGLE_CLOUD_REGION;
 
 const { version } = minimist(process.argv.slice(2), {
   default: { version: process.env.VERSION },
@@ -32,8 +30,6 @@ const envVars = [
   `APP_ENV=${env.APP_ENV}`,
   `VERSION=${version}`,
   `JWT_SECRET=${env.JWT_SECRET}`,
-  `GOOGLE_CLIENT_ID=${env.GOOGLE_CLIENT_ID}`,
-  `GOOGLE_CLIENT_SECRET=${env.GOOGLE_CLIENT_SECRET}`,
   `PGHOST=/cloudsql/${env.PGSERVERNAME.replace(":", `:${region}:`)}`,
   `PGUSER=${env.PGUSER}`,
   `PGPASSWORD=${env.PGPASSWORD}`,
